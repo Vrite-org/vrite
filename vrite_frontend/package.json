@@ -1,0 +1,25 @@
+{
+  "name": "vite-template-solid",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.7.2",
+    "vite": "^6.0.0",
+    "vite-plugin-solid": "^2.11.0"
+  },
+  "dependencies": {
+    "phoenix": "^1.7.17",
+    "prosemirror-model": "^1.24.0",
+    "prosemirror-state": "^1.4.3",
+    "prosemirror-view": "^1.37.0",
+    "solid-js": "^1.9.3"
+  }
+}
