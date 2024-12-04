@@ -8,6 +8,8 @@ defmodule VriteBackend.Application do
   @impl true
   def start(_type, _args) do
     children = [
+      # One-time setup to create the ETS table for documents
+      {Task, fn -> :ets.new(:document_store, [:named_table, :public, read_concurrency: true]) end},
       VriteBackendWeb.Telemetry,
       {DNSCluster, query: Application.get_env(:vrite_backend, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: VriteBackend.PubSub},
@@ -16,7 +18,9 @@ defmodule VriteBackend.Application do
       # Start a worker by calling: VriteBackend.Worker.start_link(arg)
       # {VriteBackend.Worker, arg},
       # Start to serve requests, typically the last entry
-      VriteBackendWeb.Endpoint
+      VriteBackendWeb.Endpoint,
+      # Start the DocumentChannel supervisor
+      {VriteBackendWeb.DocumentChannel, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
