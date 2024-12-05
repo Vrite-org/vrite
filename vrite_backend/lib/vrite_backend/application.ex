@@ -7,9 +7,11 @@ defmodule VriteBackend.Application do
 
   @impl true
   def start(_type, _args) do
+    # Dirty handling for now
+    VriteBackend.ETSSetup.create_table()
     children = [
       # One-time setup to create the ETS table for documents
-      {Task, fn -> :ets.new(:document_store, [:named_table, :public, read_concurrency: true]) end},
+      # VriteBackend.ETSInitializer,
       VriteBackendWeb.Telemetry,
       {DNSCluster, query: Application.get_env(:vrite_backend, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: VriteBackend.PubSub},
