@@ -1,15 +1,6 @@
 defmodule VriteBackendWeb.DocumentChannel do
   use Phoenix.Channel
 
-  # Make sure ETS table is created at the module level, before joining the channel.
-  def init({_endpoint, {pid, _}}) do
-    # Create the global ETS table (if not already)
-    unless :ets.info(:document_store) do
-      :ets.new(:document_store, [:set, :public, :named_table, :duplicate_bag])
-    end
-    {:ok, %{}}
-  end
-
   # Handle the join request to a document channel
   def join("document:" <> document_id, _params, socket) do
     socket = assign(socket, :document_id, document_id)
